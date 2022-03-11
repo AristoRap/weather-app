@@ -27,5 +27,5 @@ import "bootstrap";
 import { App } from "../components/app/App";
 
 document.addEventListener('turbolinks:load', () => {
-  ReactDOM.render(<App />, document.getElementById("main"));
+  ReactDOM.render(<App />, document.getElementById("app"));
 });

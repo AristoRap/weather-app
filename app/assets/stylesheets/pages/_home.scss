@@ -7,6 +7,9 @@ h1, h2, h3 {
 }
 
 .wrapper {
-  background-color: $sunny;
   min-height: 100vh;
+}
+
+.sunny {
+  background: linear-gradient($sunny-start, $sunny-end);
 }

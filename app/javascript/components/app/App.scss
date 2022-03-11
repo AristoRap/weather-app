@@ -1,2 +1,117 @@
-#main {
+// Colors
+$red: #FD1015;
+$blue: #167FFB;
+$yellow: #FFE300;
+$orange: #E67E22;
+$green: #1EDD88;
+$gray: #0E0000;
+$light-gray: #F4F4F4;
+$rainy-day: #5463FF;
+$cloudy: #ECECEC;
+$sunny-start: #ECB425;
+$sunny-end: #EF7200;
+
+.city {
+  font-size: 2rem;
+  color: white;
+}
+.date {
+  font-size: 1rem;
+  color:rgba(255, 255, 255, 0.6);
+}
+
+.daily {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  color: white;
+  &-day {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  &-weather {
+    font-size: 1rem;
+    color:rgba(255, 255, 255, 0.6);
+  }
+  &-degrees {
+    display: flex;
+    font-size: 1rem;
+  }
+  &-degrees-low {
+    font-size: 1rem;
+    color:rgba(255, 255, 255, 0.6);
+  }
+  &-degrees-high {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+
+.hourly {
+  color: white;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 1rem 1rem;
+  border-radius: 1rem;
+  &-time {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color:rgba(255, 255, 255, 0.6);
+  }
+  &-degrees {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
+.weather {
+  &-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-icon {
+    font-size: 6rem;
+    color: $yellow;
+    animation: blink 2s linear infinite
+  }
+  &-hourly {
+    margin: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    padding: 0.5rem 0.5rem;
+  }
+}
+@keyframes blink {
+  0% {
+    transform: scale(1) rotate(5deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(5deg);
+  }
+};
+
+
+.weather-degrees {
+  display: flex;
+  &-main {
+    font-size: 5rem;
+    font-weight: 500;
+    color: white;
+  }
+  &-high {
+    font-size: 1rem;
+    color:rgba(255, 255, 255, 0.6);
+  }
+  &-low {
+    color:rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    margin-left: 0.5rem;
+  }
 }

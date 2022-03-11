@@ -10,9 +10,46 @@ export const App = (props) => {
   const today = new Date();
   return (
     <div id="main">
-      <h2 className="city">{props.city}</h2>
+      <h1 className="city">{props.city}</h1>
       <h3 className="date">{today.toLocaleDateString("en-US", dateOptions)}</h3>
-      <div id="weather-current"></div>
+      <div id="weather-current">
+        <div className="weather-current">
+          <h2 className="weather-degrees-main">11°C</h2>
+          <h2 className="weather-icon">
+            <i className="fa-solid fa-sun"></i>
+          </h2>
+        </div>
+        <div className="weather-degrees">
+          <h3 className="weather-degrees-high">
+            <i className="fa-solid fa-angle-up"></i>
+            17°
+          </h3>
+          <h3 className="weather-degrees-low">
+            <i className="fa-solid fa-angle-down"></i>
+            5°
+          </h3>
+        </div>
+      </div>
+      <div className="weather-hourly">
+        {/* Here add "hourly" component by each hour */}
+        <div className="hourly">
+          <h3 className="hourly-time">Now</h3>
+          <h3 className="hourly-degrees">11°</h3>
+        </div>
+      </div>
+      <div className="weather-foreact">
+        {/* Here add "forecast" component by each day */}
+        <div className="daily">
+          <h3 className="daily-day">Saturday</h3>
+          <h3 className="daily-weather">
+            <i className="fa-solid fa-sun"></i>
+          </h3>
+          <div className="daily-degrees">
+            <h3 className="daily-degrees-high">11°</h3>
+            <h3 className="daily-degrees-low">5°</h3>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
