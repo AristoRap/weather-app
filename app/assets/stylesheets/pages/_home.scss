@@ -1,1 +1,12 @@
-// Specific CSS for your home-page
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.wrapper {
+  background-color: $sunny;
+  min-height: 100vh;
+}
