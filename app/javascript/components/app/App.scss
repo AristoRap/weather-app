@@ -87,13 +87,13 @@ $sunny-end: #EF7200;
 }
 @keyframes blink {
   0% {
-    transform: scale(1) rotate(5deg);
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.05) rotate(-5deg);
+    transform: scale(1.05);
   }
   100% {
-    transform: scale(1) rotate(5deg);
+    transform: scale(1);
   }
 };
 

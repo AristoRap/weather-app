@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Form } from '../form/Form'
+import axios from "axios";
 import './App.scss'
 
 export const App = (props) => {
@@ -8,8 +10,15 @@ export const App = (props) => {
     day: "numeric",
   };
   const today = new Date();
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=${process.env.WEATHER_API}`;
+  const [degrees, setDegrees] = useState([])
+  console.log(url)
+  useEffect(() =>{
+    axios.get(url).then(response => console.log(response))
+  },[])
   return (
     <div id="main">
+      <Form />
       <h1 className="city">{props.city}</h1>
       <h3 className="date">{today.toLocaleDateString("en-US", dateOptions)}</h3>
       <div id="weather-current">
