@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "../form/Form";
+import { Hourly } from "../hourly/Hourly";
 import axios from "axios";
 import "./App.scss";
 
@@ -8,10 +9,10 @@ export const App = (props) => {
   const [currentWeather, setCurrentWeather] = useState({});
 
   const mainUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${
-    (weather.coord && weather.coord.lat) || "52.374"
-  }&lon=${(weather.coord && weather.coord.lon) || "4.8897"}&appid=${
-    process.env.WEATHER_API
-  }`;
+    (currentWeather.coord && currentWeather.coord.lat) || "52.374"
+  }&lon=${
+    (currentWeather.coord && currentWeather.coord.lon) || "4.8897"
+  }&appid=${process.env.WEATHER_API}`;
   const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=Amsterdam&appid=${process.env.WEATHER_API}`;
 
   const dateOptions = {
@@ -19,7 +20,14 @@ export const App = (props) => {
     month: "short",
     day: "numeric",
   };
+
   const today = new Date();
+
+  const formatDate = ((date) => {
+    const formatted = new Date(date * 1000)
+    return formatted.toLocaleDateString("en-US", dateOptions);
+  })
+
 
   const submitSearch = (data) => {
     setCurrentWeather(data.result);
@@ -27,31 +35,31 @@ export const App = (props) => {
 
   useEffect(() => {
     axios
-      .get(currentUrl)
-      .then((response) => {
-        setCurrentWeather(response.data);
-      })
-      .catch((err) => {
-        const mute = err;
-      });
+    .get(currentUrl)
+    .then((response) => {
+      setCurrentWeather(response.data);
+    })
+    .catch((err) => {
+      const mute = err;
+    });
   }, []);
 
   useEffect(() => {
     axios
-      .get(mainUrl)
-      .then((response) => {
-        setWeather(response.data);
-      })
-      .catch((err) => {
-        const mute = err;
-      });
+    .get(mainUrl)
+    .then((response) => {
+      setWeather(response.data);
+    })
+    .catch((err) => {
+      const mute = err;
+    });
   }, [currentWeather]);
 
   return (
     <div id="main">
       <Form submitSearch={submitSearch} />
       <h1 className="city">{currentWeather.name}</h1>
-      <h3 className="date">{today.toLocaleDateString("en-US", dateOptions)}</h3>
+      <h3 className="date">{formatDate(today)}</h3>
       <div id="weather-current">
         <div className="weather-current">
           <h2 className="weather-degrees-main">
@@ -79,11 +87,7 @@ export const App = (props) => {
         </div>
       </div>
       <div className="weather-hourly">
-        {/* Here add "hourly" component by each hour */}
-        <div className="hourly">
-          <h3 className="hourly-time">Now</h3>
-          <h3 className="hourly-degrees">11°</h3>
-        </div>
+        <Hourly data= {weather && weather.hourly} />
       </div>
       <div className="weather-foreact">
         {/* Here add "forecast" component by each day */}
