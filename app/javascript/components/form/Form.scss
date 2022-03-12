@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  margin: 0.5rem 0 1.5rem 0;
+  ::placeholder {
+    color: white;
+  }
+  :focus {
+    outline: none;
+  }
+  &-input {
+    color: white;
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  }
+  &-submit {
+    outline: none;
+    background-color: transparent;
+    color: white;
+    border: none;
+  }
+}
