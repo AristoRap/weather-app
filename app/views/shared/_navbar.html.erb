@@ -8,10 +8,10 @@
   </button>
 
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <ul class="navbar-nav">
       <% if user_signed_in? %>
-        <li class="nav-item">
+        <li class="nav-item pr-3">
             <%= link_to "Favorites", favorites_path, class: "text-black-50" %>
         </li>
         <li class="nav-item">

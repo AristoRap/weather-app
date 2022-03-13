@@ -3,7 +3,7 @@ $red: #FD1015;
 $blue: #167FFB;
 $yellow: #FFE300;
 $orange: #E67E22;
-$green: #1EDD88;
+$green: #9AE66E;;
 $gray: #0E0000;
 $light-gray: #F4F4F4;
 $rainy-day: #5463FF;
@@ -11,6 +11,19 @@ $cloudy: #ECECEC;
 $sunny-start: #ECB425;
 $sunny-end: #EF7200;
 
+.favorite {
+  font-size: 1.1rem;
+  color: white;
+  padding: 0.4rem 0.5rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all 0.8s ease-out;
+  &-city {
+    color: $green;
+    border: 2px solid $green;
+    transition: all 0.8s ease-out;
+  }
+}
 .city {
   font-size: 2rem;
   color: white;

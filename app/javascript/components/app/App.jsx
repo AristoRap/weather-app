@@ -8,8 +8,10 @@ import "./App.scss";
 export const App = (props) => {
   const [weather, setWeather] = useState({});
   const [currentWeather, setCurrentWeather] = useState({});
+  const [favorites, setFavorites] = useState([]);
 
 
+  let favorited;
   const mainUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${
     (currentWeather.coord && currentWeather.coord.lat) || "52.374"
   }&lon=${
@@ -47,6 +49,15 @@ export const App = (props) => {
     setCurrentWeather(data.result);
   };
 
+  const findFavorite = (city) => {
+    favorites.find(f => {
+      f.name === city
+      favorited =  <i class="fa-solid fa-check favorite favorite-city"></i>
+    })
+    favorited = <i className="fa-solid fa-plus favorite"></i>;
+    return favorited
+  }
+
   useEffect(() => {
     axios
     .get(currentUrl)
@@ -75,11 +86,29 @@ export const App = (props) => {
     });
   }, [currentWeather]);
 
+  useEffect(() => {
+    fetch("favorites", {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setFavorites(data);
+      });
+  }, [currentWeather]);
+
   return (
     <div id="main">
       <Form submitSearch={submitSearch} />
-      <h1 className="city">{currentWeather.name}</h1>
-      <h3 className="date">{formatDate(today)}</h3>
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 className="city">{currentWeather.name}</h1>
+          <h3 className="date">{formatDate(today)}</h3>
+        </div>
+        <h2>
+          {currentWeather && currentWeather.name ? findFavorite(currentWeather.name) : ''}
+        </h2>
+      </div>
       <div id="weather-current">
         <div className="weather-current">
           <h2 className="weather-degrees-main">

@@ -27,7 +27,6 @@ export const Favorites = (props) => {
         .get(`${urlBase}${query}${apiKey}`)
         .then((response) => {
           setFavWeather(favWeather => [...favWeather, response.data]);
-
         })
         .catch((err) => {
           const mute = err;

@@ -11,7 +11,6 @@ h1, h2, h3 {
   width: 100%;
   overflow: hidden;
   background: transparent;
-  transition: all 0.8s ease-out;
 }
 
 .yellow {
@@ -25,19 +24,19 @@ h1, h2, h3 {
 
 .clear {
   background: linear-gradient($clear-start, $clear-end);
-  transition: all 0.8s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .clouds {
   background: linear-gradient($cloud-start, $cloud-end);
-  transition: all 0.8s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .drizzle {
   background: linear-gradient($cloud-start, $cloud-end);
-  transition: all 0.8s ease-out;
+  transition: all 0.3s ease-out;
 }
 .rain {
   background: linear-gradient($cloud-start, $cloud-end);
-  transition: all 0.8s ease-out;
+  transition: all 0.3s ease-out;
 }
