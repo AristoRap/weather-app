@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "../form/Form";
 import { Hourly } from "../hourly/Hourly";
+import { Daily } from "../daily/Daily";
 import axios from "axios";
 import "./App.scss";
 
@@ -24,7 +25,7 @@ export const App = (props) => {
   const today = new Date();
 
   const formatDate = ((date) => {
-    const formatted = new Date(date * 1000)
+    const formatted = new Date(date)
     return formatted.toLocaleDateString("en-US", dateOptions);
   })
 
@@ -89,19 +90,8 @@ export const App = (props) => {
 
       <Hourly data= {weather && weather.hourly} />
 
-      <div className="weather-forecast">
-        {/* Here add "forecast" component by each day */}
-        <div className="daily">
-          <h3 className="daily-day">Saturday</h3>
-          <h3 className="daily-weather">
-            <i className="fa-solid fa-sun"></i>
-          </h3>
-          <div className="daily-degrees">
-            <h3 className="daily-degrees-high">11°</h3>
-            <h3 className="daily-degrees-low">5°</h3>
-          </div>
-        </div>
-      </div>
+      <Daily data= {weather && weather.daily} />
+
     </div>
   );
 };

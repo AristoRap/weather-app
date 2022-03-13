@@ -21,14 +21,14 @@ $sunny-end: #EF7200;
 }
 
 .daily {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding: 0.5rem;
   color: white;
   &-day {
     font-size: 1rem;
     font-weight: 300;
+    flex-grow: 1;
   }
   &-weather {
     font-size: 1rem;
@@ -37,6 +37,7 @@ $sunny-end: #EF7200;
   &-degrees {
     display: flex;
     font-size: 1rem;
+    justify-self: flex-end;
   }
   &-degrees-low {
     font-size: 1rem;
