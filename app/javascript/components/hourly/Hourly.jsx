@@ -12,14 +12,18 @@ export const Hourly = (props) => {
   };
 
   return (
-    <div className="weather-hourly">
-      {props.data &&
-        props.data.slice(0, 6).map((h, i) => (
-          <div className="hourly" key={i}>
-            <h3 className="hourly-time">{formatTime(h.dt)}</h3>
-            <h3 className="hourly-degrees">{Math.round(h.temp - 273.15)}°</h3>
-          </div>
-        ))}
+    <div className="weather-hourly mySwiper">
+      <div className="swiper-wrapper">
+        {props.data &&
+          props.data.slice(0, 23).map((h, i) => (
+            <div className="hourly swiper-slide" key={i}>
+              <h3 className="hourly-time">{formatTime(h.dt)}</h3>
+              <h3 className="hourly-degrees">{Math.round(h.temp - 273.15)}°</h3>
+            </div>
+          ))}
+      </div>
+      <div className="swiper-button-next swiper-nav text-white"></div>
+      <div className="swiper-button-prev swiper-nav text-white"></div>
     </div>
   );
 }

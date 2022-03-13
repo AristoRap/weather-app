@@ -25,7 +25,9 @@ import "bootstrap";
 
 // Internal imports, e.g:
 import { App } from "../components/app/App";
+import { loadSwiperCarousel } from "../plugins/init_swiper";
 
 document.addEventListener('turbolinks:load', () => {
   ReactDOM.render(<App />, document.getElementById("app"));
+  loadSwiperCarousel();
 });
