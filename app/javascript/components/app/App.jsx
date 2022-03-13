@@ -86,10 +86,10 @@ export const App = (props) => {
           </h3>
         </div>
       </div>
-      <div className="weather-hourly">
-        <Hourly data= {weather && weather.hourly} />
-      </div>
-      <div className="weather-foreact">
+
+      <Hourly data= {weather && weather.hourly} />
+
+      <div className="weather-forecast">
         {/* Here add "forecast" component by each day */}
         <div className="daily">
           <h3 className="daily-day">Saturday</h3>

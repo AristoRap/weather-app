@@ -12,15 +12,14 @@ export const Hourly = (props) => {
   };
 
   return (
-    <div>
-      {
-        props.data && props.data.slice(0,6).map((h, i) => (
+    <div className="weather-hourly">
+      {props.data &&
+        props.data.slice(0, 6).map((h, i) => (
           <div className="hourly" key={i}>
             <h3 className="hourly-time">{formatTime(h.dt)}</h3>
             <h3 className="hourly-degrees">{Math.round(h.temp - 273.15)}°</h3>
           </div>
-        ))
-      }
-     </div>
-  )
+        ))}
+    </div>
+  );
 }
