@@ -25,9 +25,17 @@ import "bootstrap";
 
 // Internal imports, e.g:
 import { App } from "../components/app/App";
+import { Favorites } from "../components/favorites/Favorites";
 import { loadSwiperCarousel } from "../plugins/init_swiper";
 
+
 document.addEventListener('turbolinks:load', () => {
-  ReactDOM.render(<App />, document.getElementById("app"));
-  loadSwiperCarousel();
+  const app = document.getElementById("app");
+  const favorites = document.getElementById("favorites");
+  if (app) {
+    ReactDOM.render(<App />, app);
+    loadSwiperCarousel();
+  } else if (favorites) {
+    ReactDOM.render(<Favorites />, favorites);
+  }
 });

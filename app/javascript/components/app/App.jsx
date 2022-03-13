@@ -8,7 +8,7 @@ import "./App.scss";
 export const App = (props) => {
   const [weather, setWeather] = useState({});
   const [currentWeather, setCurrentWeather] = useState({});
-  const [user, setUser] = useState({});
+
 
   const mainUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${
     (currentWeather.coord && currentWeather.coord.lat) || "52.374"
@@ -46,17 +46,6 @@ export const App = (props) => {
   const submitSearch = (data) => {
     setCurrentWeather(data.result);
   };
-
-  useEffect(() => {
-    fetch('/',{
-      method: "GET",
-      headers: { Accept: "application/json" },
-    })
-    .then(response => response.json())
-    .then(data => {
-      setUser(data);
-    })
-  }, []);
 
   useEffect(() => {
     axios
