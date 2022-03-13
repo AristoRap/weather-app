@@ -8,6 +8,7 @@ import "./App.scss";
 export const App = (props) => {
   const [weather, setWeather] = useState({});
   const [currentWeather, setCurrentWeather] = useState({});
+  const [user, setUser] = useState({});
 
   const mainUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${
     (currentWeather.coord && currentWeather.coord.lat) || "52.374"
@@ -29,10 +30,33 @@ export const App = (props) => {
     return formatted.toLocaleDateString("en-US", dateOptions);
   })
 
+  const updateIcon = (weather) => {
+    switch (weather) {
+      case "Clear":
+        return <i className="fa-solid fa-sun yellow"></i>;
+      case "Drizzle":
+        return <i className="fa-solid fa-cloud-rain dark"></i>;
+      case "Clouds":
+        return <i className="fa-solid fa-cloud dark"></i>;
+      case "Rain":
+        return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
+    }
+  }
 
   const submitSearch = (data) => {
     setCurrentWeather(data.result);
   };
+
+  useEffect(() => {
+    fetch('/',{
+      method: "GET",
+      headers: { Accept: "application/json" },
+    })
+    .then(response => response.json())
+    .then(data => {
+      setUser(data);
+    })
+  }, []);
 
   useEffect(() => {
     axios
@@ -46,10 +70,16 @@ export const App = (props) => {
   }, []);
 
   useEffect(() => {
+    const wrapper = document.querySelector('.wrapper') ;
     axios
     .get(mainUrl)
     .then((response) => {
       setWeather(response.data);
+      const classIcon = currentWeather.weather && currentWeather.weather[0].main.toLowerCase();
+      if (classIcon) {
+        wrapper.className = 'wrapper'
+        wrapper.classList.add(classIcon);
+      }
     })
     .catch((err) => {
       const mute = err;
@@ -69,18 +99,20 @@ export const App = (props) => {
             °C
           </h2>
           <h2 className="weather-icon">
-            <i className="fa-solid fa-sun"></i>
+            {updateIcon(
+              currentWeather.weather && currentWeather.weather[0].main
+            )}
           </h2>
         </div>
         <div className="weather-degrees">
           <h3 className="weather-degrees-high">
-            <i className="fa-solid fa-angle-up"></i>
+            <i className="fa-solid fa-angle-up mr-1"></i>
             {currentWeather.main &&
               Math.round(currentWeather.main.temp_max - 273.15)}
             °
           </h3>
           <h3 className="weather-degrees-low">
-            <i className="fa-solid fa-angle-down"></i>
+            <i className="fa-solid fa-angle-down mr-1"></i>
             {currentWeather.main &&
               Math.round(currentWeather.main.temp_min - 273.15)}
             °
@@ -88,14 +120,9 @@ export const App = (props) => {
         </div>
       </div>
 
-      <Hourly data= {weather && weather.hourly} />
+      <Hourly data={weather && weather.hourly} />
 
-      <Daily data= {weather && weather.daily} />
-
+      <Daily data={weather && weather.daily} />
     </div>
   );
-};
-
-App.defaultProps = {
-  city: "Amsterdam",
 };

@@ -10,8 +10,34 @@ h1, h2, h3 {
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
+  background: transparent;
+  transition: all 0.8s ease-out;
 }
 
-.sunny {
-  background: linear-gradient($sunny-start, $sunny-end);
+.yellow {
+  color: $yellow;
+}
+
+.dark {
+  color: $cloudy;
+}
+
+
+.clear {
+  background: linear-gradient($clear-start, $clear-end);
+  transition: all 0.8s ease-out;
+}
+
+.clouds {
+  background: linear-gradient($cloud-start, $cloud-end);
+  transition: all 0.8s ease-out;
+}
+
+.drizzle {
+  background: linear-gradient($cloud-start, $cloud-end);
+  transition: all 0.8s ease-out;
+}
+.rain {
+  background: linear-gradient($cloud-start, $cloud-end);
+  transition: all 0.8s ease-out;
 }

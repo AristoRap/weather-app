@@ -16,9 +16,10 @@ export const Daily = (props) => {
           <div className="daily" key={i}>
             <h3 className="daily-day">{formatDate(d.dt)}</h3>
             <div className="d-flex justify-content-between">
-              <h3 className="daily-weather">
-                <i className="fa-solid fa-sun"></i>
-              </h3>
+                <img
+                  className="daily-weather"
+                  src={`http://openweathermap.org/img/wn/${d.weather[0].icon}.png`}
+                />
               <div className="daily-degrees">
                 <h3 className="daily-degrees-high">
                   {Math.round(d.temp.max - 273.15)}°

@@ -40,7 +40,7 @@ export const Form = (props) => {
           <i className="fas fa-search form-icon"></i>
         </button>
       </form>
-      <ul className="list-inline">
+      <ul className="list-inline form-results">
         {location === '' ? '' : <li key={result.id}>{result.name}</li>}
      </ul>
     </div>
