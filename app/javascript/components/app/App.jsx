@@ -37,27 +37,52 @@ export const App = (props) => {
     switch (weather) {
       case "Clear":
         return <i className="fa-solid fa-sun yellow"></i>;
-      case "Drizzle":
-        return <i className="fa-solid fa-cloud-rain dark"></i>;
-      case "Clouds":
-        return <i className="fa-solid fa-cloud dark"></i>;
-      case "Rain":
-        return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
-    }
-  }
+        case "Drizzle":
+          return <i className="fa-solid fa-cloud-rain dark"></i>;
+          case "Clouds":
+            return <i className="fa-solid fa-cloud dark"></i>;
+            case "Rain":
+              return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
+            }
+          }
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (Object.keys(user).length === 0 && user.constructor === Object) {
-      console.log("not signed in");
-    } else {
-      console.log(e.currentTarget);
-    }
-  }
+          const handleAddClick = (e) => {
+            const token = document.querySelector("[name=csrf-token]").content;
+            axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
+            if (Object.keys(user).length !== 0 && user.constructor === Object) {
+              const favorite = {
+                name: currentWeather && currentWeather.name,
+                lat: currentWeather.coord && currentWeather.coord.lat,
+                lon: currentWeather.coord && currentWeather.coord.lon,
+              };
+              axios
+                .post("favorites", {
+                  favorite,
+                })
+                .then((response) => {
+                  console.log(response);
+                  if (
+                    Object.keys(response.data).length !== 0 &&
+                    response.data.constructor === Object
+                  ) {
+                    setFavorites(prevState => {
+                      return [...prevState, response.data]
+                    })
+                  }
+                    axios.defaults.headers.common["X-CSRF-TOKEN"] = undefined;
+                });
+            }
+          }
 
-  const submitSearch = (data) => {
-    setCurrentWeather(data.result);
-  };
+          const handleRemoveClick = (e) => {
+            if (Object.keys(user).length !== 0 && user.constructor === Object) {
+              console.log(e.currentTarget);
+            }
+          }
+
+          const submitSearch = (data) => {
+            setCurrentWeather(data.result);
+          };
 
   const findFavorite = (city) => {
     let favCity;
@@ -68,14 +93,14 @@ export const App = (props) => {
       favorited = (
         <i
           className="fa-solid fa-check favorite favorite-city"
-          onClick={handleClick}
+          onClick={handleRemoveClick}
         ></i>
       );
     } else if (Object.keys(user).length === 0 && user.constructor === Object) {
-      favorited = <i className="fa-solid fa-plus favorite favorite-muted"></i>;
+      favorited = (<i className="fa-solid fa-plus favorite favorite-muted"></i>);
     } else {
       favorited = (
-        <i className="fa-solid fa-plus favorite" onClick={handleClick}></i>
+        <i className="fa-solid fa-plus favorite" onClick={handleAddClick}></i>
       );
 
     }

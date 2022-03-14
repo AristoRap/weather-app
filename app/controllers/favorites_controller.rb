@@ -8,4 +8,20 @@ class FavoritesController < ApplicationController
       format.json { render json: @favorites }
     end
   end
+
+  def create
+    @favorite = Favorite.new(favorite_params)
+    @favorite.user = current_user
+    if @favorite.save
+      render json: @favorite
+    else
+      render json: {}
+    end
+  end
+
+  private
+
+  def favorite_params
+    params.require('favorite').permit(:name, :lat, :lon)
+  end
 end
