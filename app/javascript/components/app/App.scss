@@ -11,6 +11,8 @@ $cloudy: #ECECEC;
 $sunny-start: #ECB425;
 $sunny-end: #EF7200;
 
+
+
 .favorite {
   font-size: 1.1rem;
   color: white;
@@ -22,6 +24,10 @@ $sunny-end: #EF7200;
     color: $green;
     border: 2px solid $green;
     transition: all 0.8s ease-out;
+  }
+  &-muted {
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
   }
 }
 .city {

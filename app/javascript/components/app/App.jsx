@@ -9,6 +9,7 @@ export const App = (props) => {
   const [weather, setWeather] = useState({});
   const [currentWeather, setCurrentWeather] = useState({});
   const [favorites, setFavorites] = useState([]);
+  const [user, setUser] = useState({});
 
 
   let favorited;
@@ -45,6 +46,15 @@ export const App = (props) => {
     }
   }
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (Object.keys(user).length === 0 && user.constructor === Object) {
+      console.log("not signed in");
+    } else {
+      console.log(e.currentTarget);
+    }
+  }
+
   const submitSearch = (data) => {
     setCurrentWeather(data.result);
   };
@@ -55,9 +65,19 @@ export const App = (props) => {
       favCity = favorites.find(f => f.name === city)
     }
     if (favCity) {
-      favorited = <i className="fa-solid fa-check favorite favorite-city"></i>;
+      favorited = (
+        <i
+          className="fa-solid fa-check favorite favorite-city"
+          onClick={handleClick}
+        ></i>
+      );
+    } else if (Object.keys(user).length === 0 && user.constructor === Object) {
+      favorited = <i className="fa-solid fa-plus favorite favorite-muted"></i>;
     } else {
-      favorited = <i className="fa-solid fa-plus favorite"></i>;
+      favorited = (
+        <i className="fa-solid fa-plus favorite" onClick={handleClick}></i>
+      );
+
     }
     return favorited
   }
@@ -100,6 +120,17 @@ export const App = (props) => {
         setFavorites(data);
       });
   }, [currentWeather]);
+
+  useEffect(() => {
+    fetch("/", {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+      });
+  }, []);
 
   return (
     <div id="main">
