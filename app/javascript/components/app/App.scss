@@ -20,19 +20,19 @@ $sunny-end: #EF7200;
   padding: 0.4rem 0.5rem;
   border-radius: 50%;
   border: 2px solid white;
-  transition: all 0.3s ease-out;
+  transition: color 0.3s ease-out, border 0.3s ease-out;
   &-city {
     color: $green;
     border: 2px solid $green;
-    transition: all 0.2s ease-out;
+    transition: border 0.3s ease-out, color 0.3s ease-out;
   }
   &-remove {
-      font-size: 1.3rem;
-      padding: 0.3rem 0.6rem;
-      color: $red;
-      border: 2px solid $red;
-      transition: all 0.2s ease-out;
-      cursor: pointer;
+    font-size: 1.3rem;
+    padding: 0.3rem 0.6rem;
+    color: $red;
+    border: 2px solid $red;
+    cursor: pointer;
+    transition: border 0.3s ease-out, color 0.3s ease-out;
     }
   &-muted {
     color: rgba(255, 255, 255, 0.3);
