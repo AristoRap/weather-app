@@ -50,13 +50,15 @@ export const App = (props) => {
   };
 
   const findFavorite = (city) => {
-    const favCity = favorites.find(f => f.name === city)
+    let favCity;
+    if (favorites.length >= 1) {
+      favCity = favorites.find(f => f.name === city)
+    }
     if (favCity) {
       favorited = <i className="fa-solid fa-check favorite favorite-city"></i>;
     } else {
       favorited = <i className="fa-solid fa-plus favorite"></i>;
     }
-    console.log(favorited)
     return favorited
   }
 
