@@ -9,10 +9,9 @@ export const App = (props) => {
   const [weather, setWeather] = useState({});
   const [currentWeather, setCurrentWeather] = useState({});
   const [favorites, setFavorites] = useState([]);
+  const [favorited, setFavorited] = useState("");
   const [user, setUser] = useState({});
 
-
-  let favorited;
   const mainUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${
     (currentWeather.coord && currentWeather.coord.lat) || "52.374"
   }&lon=${
@@ -28,111 +27,133 @@ export const App = (props) => {
 
   const today = new Date();
 
-  const formatDate = ((date) => {
-    const formatted = new Date(date)
+  const formatDate = (date) => {
+    const formatted = new Date(date);
     return formatted.toLocaleDateString("en-US", dateOptions);
-  })
+  };
 
   const updateIcon = (weather) => {
     switch (weather) {
       case "Clear":
         return <i className="fa-solid fa-sun yellow"></i>;
-        case "Drizzle":
-          return <i className="fa-solid fa-cloud-rain dark"></i>;
-          case "Clouds":
-            return <i className="fa-solid fa-cloud dark"></i>;
-            case "Rain":
-              return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
-            }
-          }
+      case "Drizzle":
+        return <i className="fa-solid fa-cloud-rain dark"></i>;
+      case "Clouds":
+        return <i className="fa-solid fa-cloud dark"></i>;
+      case "Rain":
+        return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
+    }
+  };
 
-          const handleAddClick = (e) => {
-            const token = document.querySelector("[name=csrf-token]").content;
-            axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
-            if (Object.keys(user).length !== 0 && user.constructor === Object) {
-              const favorite = {
-                name: currentWeather && currentWeather.name,
-                lat: currentWeather.coord && currentWeather.coord.lat,
-                lon: currentWeather.coord && currentWeather.coord.lon,
-              };
-              axios
-                .post("favorites", {
-                  favorite,
-                })
-                .then((response) => {
-                  console.log(response);
-                  if (
-                    Object.keys(response.data).length !== 0 &&
-                    response.data.constructor === Object
-                  ) {
-                    setFavorites(prevState => {
-                      return [...prevState, response.data]
-                    })
-                  }
-                    axios.defaults.headers.common["X-CSRF-TOKEN"] = undefined;
-                });
-            }
+  const handleAddClick = (e) => {
+    const token = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
+    if (Object.keys(user).length !== 0 && user.constructor === Object) {
+      const favorite = {
+        name: currentWeather && currentWeather.name,
+        lat: currentWeather.coord && currentWeather.coord.lat,
+        lon: currentWeather.coord && currentWeather.coord.lon,
+      };
+      axios
+        .post("favorites", {
+          favorite,
+        })
+        .then((response) => {
+          console.log(response);
+          if (
+            Object.keys(response.data).length !== 0 &&
+            response.data.constructor === Object
+          ) {
+            setFavorites((prevState) => {
+              return [...prevState, response.data];
+            });
           }
+          axios.defaults.headers.common["X-CSRF-TOKEN"] = undefined;
+        });
+    }
+  };
 
-          const handleRemoveClick = (e) => {
-            if (Object.keys(user).length !== 0 && user.constructor === Object) {
-              console.log(e.currentTarget);
-            }
-          }
+  const handleRemoveClick = (e) => {
+    if (Object.keys(user).length !== 0 && user.constructor === Object) {
+      console.log(e.currentTarget);
+    }
+  };
 
-          const submitSearch = (data) => {
-            setCurrentWeather(data.result);
-          };
+  const handleMouseEnter = () => {
+    setFavorited(
+      <i
+        className="fa-solid fa-xmark favorite favorite-remove"
+        onClick={handleRemoveClick}
+        onMouseLeave={handleMouseLeave}
+      ></i>
+    );
+  };
+  const handleMouseLeave = () => {
+    setFavorited(
+      <i
+        className="fa-solid fa-check favorite favorite-city"
+        onClick={handleRemoveClick}
+        onMouseEnter={handleMouseEnter}
+      ></i>
+    );
+  };
+
+  const submitSearch = (data) => {
+    setCurrentWeather(data.result);
+  };
 
   const findFavorite = (city) => {
     let favCity;
     if (favorites.length >= 1) {
-      favCity = favorites.find(f => f.name === city)
+      favCity = favorites.find((f) => f.name === city);
     }
     if (favCity) {
-      favorited = (
+      setFavorited(
         <i
           className="fa-solid fa-check favorite favorite-city"
           onClick={handleRemoveClick}
+          onMouseEnter={handleMouseEnter}
         ></i>
       );
     } else if (Object.keys(user).length === 0 && user.constructor === Object) {
-      favorited = (<i className="fa-solid fa-plus favorite favorite-muted"></i>);
+      setFavorited(
+        <i className="fa-solid fa-plus favorite favorite-muted"></i>
+      );
     } else {
-      favorited = (
+      setFavorited(
         <i className="fa-solid fa-plus favorite" onClick={handleAddClick}></i>
       );
-
     }
-    return favorited
-  }
+  };
 
   useEffect(() => {
     axios
-    .get(currentUrl)
-    .then((response) => {
-      setCurrentWeather(response.data);
-    })
-    .catch((err) => {
-      const mute = err;
-    });
+      .get(currentUrl)
+      .then((response) => {
+        setCurrentWeather(response.data);
+      })
+      .catch((err) => {
+        const mute = err;
+      });
   }, []);
 
   useEffect(() => {
-    const wrapper = document.querySelector('.wrapper') ;
+    const wrapper = document.querySelector(".wrapper");
     axios
-    .get(mainUrl)
-    .then((response) => {
-      setWeather(response.data);
-      const classIcon = currentWeather.weather && currentWeather.weather[0].main.toLowerCase();
-      if (classIcon) {
-        wrapper.className = 'wrapper'
-        wrapper.classList.add(classIcon);
-      }
-    })
-    .catch((err) => {
-      const mute = err;
-    });
+      .get(mainUrl)
+      .then((response) => {
+        setWeather(response.data);
+        const classIcon =
+          currentWeather.weather &&
+          currentWeather.weather[0].main.toLowerCase();
+        if (classIcon) {
+          wrapper.className = "wrapper";
+          wrapper.classList.add(classIcon);
+        }
+      })
+      .catch((err) => {
+        const mute = err;
+      });
   }, [currentWeather]);
 
   useEffect(() => {
@@ -143,6 +164,7 @@ export const App = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setFavorites(data);
+        findFavorite(currentWeather.name);
       });
   }, [currentWeather]);
 
@@ -165,9 +187,7 @@ export const App = (props) => {
           <h1 className="city">{currentWeather.name}</h1>
           <h3 className="date">{formatDate(today)}</h3>
         </div>
-        <h2>
-          {currentWeather && currentWeather.name ? findFavorite(currentWeather.name) : ''}
-        </h2>
+        <h2>{currentWeather && currentWeather.name ? favorited : ""}</h2>
       </div>
       <div id="weather-current">
         <div className="weather-current">

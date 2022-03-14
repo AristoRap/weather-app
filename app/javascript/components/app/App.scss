@@ -1,9 +1,10 @@
 // Colors
-$red: #FD1015;
+$red: #cc3333;
 $blue: #167FFB;
 $yellow: #FFE300;
 $orange: #E67E22;
-$green: #9AE66E;;
+$green: #9AE66E;
+$green-bright: hsl(98, 71%, 90%);
 $gray: #0E0000;
 $light-gray: #F4F4F4;
 $rainy-day: #5463FF;
@@ -19,12 +20,20 @@ $sunny-end: #EF7200;
   padding: 0.4rem 0.5rem;
   border-radius: 50%;
   border: 2px solid white;
-  transition: all 0.8s ease-out;
+  transition: all 0.3s ease-out;
   &-city {
     color: $green;
     border: 2px solid $green;
-    transition: all 0.8s ease-out;
+    transition: all 0.2s ease-out;
   }
+  &-remove {
+      font-size: 1.3rem;
+      padding: 0.3rem 0.6rem;
+      color: $red;
+      border: 2px solid $red;
+      transition: all 0.2s ease-out;
+      cursor: pointer;
+    }
   &-muted {
     color: rgba(255, 255, 255, 0.3);
     border: 2px solid rgba(255, 255, 255, 0.3);
