@@ -21,6 +21,14 @@ $sunny-end: #EF7200;
   border-radius: 50%;
   border: 2px solid white;
   transition: color 0.3s ease-out, border 0.3s ease-out;
+  &-add {
+    &:hover {
+      cursor: pointer;
+      color: $green;
+      border: 2px solid $green;
+      transition: border 0.3s ease-out, color 0.3s ease-out;
+    }
+  }
   &-city {
     color: $green;
     border: 2px solid $green;

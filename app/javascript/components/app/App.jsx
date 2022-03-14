@@ -48,6 +48,7 @@ export const App = (props) => {
   const handleAddClick = (e) => {
     const token = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
+
     if (Object.keys(user).length !== 0 && user.constructor === Object) {
       const favorite = {
         name: currentWeather && currentWeather.name,
@@ -59,23 +60,43 @@ export const App = (props) => {
           favorite,
         })
         .then((response) => {
-          console.log(response);
-          if (
-            Object.keys(response.data).length !== 0 &&
-            response.data.constructor === Object
-          ) {
-            setFavorites((prevState) => {
-              return [...prevState, response.data];
-            });
-          }
+          if (Object.keys(response.data.length) !== 0) {
+            setFavorites(response.data);
+            setFavorited(
+              <i
+                className="fa-solid fa-check favorite favorite-city"
+                onClick={handleRemoveClick}
+                onMouseEnter={handleMouseEnter}
+              ></i>
+            );
+          };
           axios.defaults.headers.common["X-CSRF-TOKEN"] = undefined;
         });
     }
   };
 
   const handleRemoveClick = (e) => {
-    if (Object.keys(user).length !== 0 && user.constructor === Object) {
-      console.log(e.currentTarget);
+    const token = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
+    const city = currentWeather && currentWeather.name;
+    const fav = favorites.find((f) => f.name === city);
+    if (city && fav) {
+      axios
+        .delete(`favorites/${fav.id}`, {
+          favorited,
+        })
+        .then((response) => {
+          if ( Object.keys(response.data.length) !== 0) {
+            setFavorites(response.data);
+            setFavorited(
+              <i
+                className="fa-solid fa-plus favorite favorite-add"
+                onClick={handleAddClick}
+              ></i>
+            );
+          }
+          axios.defaults.headers.common["X-CSRF-TOKEN"] = undefined;
+        });
     }
   };
 
@@ -121,7 +142,10 @@ export const App = (props) => {
       );
     } else {
       setFavorited(
-        <i className="fa-solid fa-plus favorite" onClick={handleAddClick}></i>
+        <i
+          className="fa-solid fa-plus favorite favorite-add"
+          onClick={handleAddClick}
+        ></i>
       );
     }
   };

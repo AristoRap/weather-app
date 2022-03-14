@@ -12,10 +12,22 @@ class FavoritesController < ApplicationController
   def create
     @favorite = Favorite.new(favorite_params)
     @favorite.user = current_user
+    @favorites = current_user.favorites
     if @favorite.save
-      render json: @favorite
+      render json: @favorites
     else
       render json: {}
+    end
+  end
+
+  def destroy
+    @favorite = Favorite.find(params[:id])
+    @favorites = current_user.favorites
+    @favorite.destroy
+    if @favorite.destroyed?
+      render json: @favorites
+    else
+      redirect_to root_path, alert: 'Something went wrong when removing from favorites'
     end
   end
 
