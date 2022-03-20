@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./Favorites.scss";
+import axios from "axios";
 
 export const Favorites = (props) => {
   const [favorites, setFavorites] = useState([]);
   const [favWeather, setFavWeather] = useState([]);
+
+  const updateIcon = (weather) => {
+    switch (weather) {
+      case "Clear":
+        return <i className="fa-solid fa-sun yellow"></i>;
+      case "Drizzle":
+        return <i className="fa-solid fa-cloud-rain dark"></i>;
+      case "Clouds":
+        return <i className="fa-solid fa-cloud dark"></i>;
+      case "Rain":
+        return <i className="fa-solid fa-cloud-showers-heavy dark"></i>;
+    }
+  };
 
   useEffect(() => {
     fetch("favorites", {
@@ -13,6 +27,7 @@ export const Favorites = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setFavorites(data);
+        document.body.style.backgroundColor = "#6EBF8B";
       });
   }, []);
 
@@ -34,26 +49,30 @@ export const Favorites = (props) => {
     })
   }, [favorites])
 
-
+  console.log(favWeather)
   return (
     <div className="favorites">
-      {
-        favorites.map((f, i) => {
-          <div className="favorite" key={i}>
-            <h2>City</h2>
-            <div className="d-flex">
-              <h3 className="favorite-degrees-high">
-                <i className="fa-solid fa-angle-up mr-1"></i>
-                11°
-              </h3>
-              <h3 className="weather-degrees-low">
-                <i className="fa-solid fa-angle-down mr-1"></i>
-                7°
+      {favWeather &&
+        favWeather.map((favWeather, i) => (
+          <div
+            className="favorite-wrapper"
+            key={i}
+          >
+            <h2 className='p-3'>{favorites[i].name}</h2>
+            <div className="fav-weather p-3">
+              <h2 className="fav-weather-icon">
+                {updateIcon(
+                  favWeather.current && favWeather.current.weather[0].main
+                )}
+              </h2>
+              <h3 className="favorite-degrees-high flex-grow-1">
+                {favWeather.current &&
+                  Math.round(favWeather.current.temp - 273.15)}
+                °C
               </h3>
             </div>
-          </div>;
-        })
-      }
+          </div>
+        ))}
     </div>
-  )
+  );
 };
